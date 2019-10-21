@@ -18,7 +18,7 @@ course_id = 345
 test_output_file_name = "Output.txt"
 
 
-api_key = "c0f0e3594c99b2e58a46cf3fc97538385c28eae0"
+# api_key = "c0f0e3594c99b2e58a46cf3fc97538385c28eae0"
 
 try:
     # Python 2
@@ -259,7 +259,7 @@ def get_output(notebook_data):
     for cell in notebook_data["cells"]:
         source = cell["source"]
         for line in source:
-            if('_ = ok.grade' in line):
+            if('ok.grade("q' in line):
                 for output in cell["outputs"]:
                     test_output += line + '\n' + ''.join(output["text"])
     return test_output
@@ -291,7 +291,7 @@ def processAllNotebooks(output_dir, assignment_name):
 
                 test_output = processNotebook(
                     filepath, student_email, assignment_name)
-                print(test_output)
+
                 upload_test_output(api_key, course_name, course_period,
                                 student_email, assignment_name, test_output)
 
@@ -304,16 +304,17 @@ def processNotebook(notebook_path, student_email, assignment_name):
     """ Processes the notebook to comment/delete okpy lines, and adds cell containing the
     autograder snippet
     """
-    test_output = ""
     with open(notebook_path, 'r') as json_file:
         notebook_data = json.load(json_file)
-        test_output = get_output(notebook_data)
+
+    test_output = get_output(notebook_data)
 
     return test_output
 
 
 def startProcess(output_dir, assignment_name):
     """ Runs all of the processing """
+    print(assignment_name)
     assignment = getAssignmentData(assignment_name)
     processAllNotebooks(output_dir, assignment["name"])
 

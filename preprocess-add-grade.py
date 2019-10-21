@@ -1,6 +1,4 @@
 # REWRITTEN for UCSB INT 15 by Eduardo Escoto
-
-
 """
 Importing Necessary Modules:
 
@@ -31,7 +29,7 @@ api_key = "c0f0e3594c99b2e58a46cf3fc97538385c28eae0"
 course_name = 'TEST-INT5'
 course_period = 'F19'
 course_id = 345
-
+# codepost.configure_api_key(api_key)
 
 """
 Creating Utility functions to aid in processing the notebooks correctly
@@ -100,7 +98,7 @@ def commentOKPYSubmit(notebook_data, mode="comment"):
     for cell in notebook_data["cells"]:
         source = cell["source"]
         for index, line in enumerate(source):
-            if("ok.submit" in line):
+            if("ok.submit" in line or "ok.auth" in line):
                 if mode == "comment":
                     source[index] = "# Removed by AutoGrader" + line
                 elif mode == "delete":
